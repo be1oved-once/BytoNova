@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Dynamic SEO — filled by JS -->
+<title id="pageTitle">Loading... - BytoNova</title>
+<meta name="description" id="pageMeta" content="">
+<meta name="robots" content="index, follow">
+<meta property="og:title" id="ogTitle" content="">
+<meta property="og:description" id="ogDesc" content="">
+<meta property="og:type" content="article">
+<meta property="og:url" id="ogUrl" content="">
+<meta property="og:image" id="ogImage" content="">
+<meta property="og:site_name" content="BytoNova">
+<meta property="article:published_time" id="ogPubTime" content="">
+<meta property="article:section" id="ogSection" content="">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="twTitle" content="">
+<meta name="twitter:description" id="twDesc" content="">
+<meta name="twitter:image" id="twImage" content="">
+<link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/src/css/main.css">
+<style>
+body.no-ticker { padding-top: var(--nav-h); }
+
+/* Reading progress bar */
+.read-progress {
+  position: fixed; top: var(--nav-h); left: 0;
+  height: 2px; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  z-index: 998; transition: width 0.1s linear;
+}
+
+/* Article layout */
+.article-wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+.article-main { padding: 48px 0 72px; }
+
+.article-breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-m); font-size: 11px; color: var(--text-3);
+  margin-bottom: 24px;
+}
+.article-breadcrumb a { color: var(--text-3); transition: color var(--trans); }
+.article-breadcrumb a:hover { color: var(--accent); }
+.article-breadcrumb i { font-size: 8px; }
+
+.article-cat {
+  font-family: var(--font-m); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 4px;
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-bottom: 18px;
+}
+
+.article-title {
+  font-family: var(--font-d); font-size: clamp(26px, 4vw, 42px);
+  font-weight: 800; line-height: 1.14; letter-spacing: -0.025em;
+  color: var(--text-1); margin-bottom: 20px;
+}
+
+.article-meta-row {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px; margin-bottom: 24px;
+}
+.article-meta-left {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-m); font-size: 11px; color: var(--text-3);
+  flex-wrap: wrap;
+}
+.article-meta-left i { color: var(--accent); font-size: 10px; }
+.meta-sep { color: var(--border-2); }
+
+/* Share buttons */
+.share-row { display: flex; align-items: center; gap: 8px; }
+.share-btn-main {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--bg-3); border: 1px solid var(--border-2);
+  color: var(--text-2); font-size: 12px; font-weight: 500;
+  padding: 7px 14px; border-radius: var(--radius-pill);
+  cursor: pointer; font-family: var(--font-b);
+  transition: all var(--trans);
+}
+.share-btn-main:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+.share-icon-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--border-2); background: transparent;
+  color: var(--text-2); font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--trans);
+}
+.share-icon-btn:hover { transform: translateY(-2px); }
+.share-icon-btn.wa:hover  { color: #25d366; border-color: #25d366; background: rgba(37,211,102,0.1); }
+.share-icon-btn.tw:hover  { color: #1da1f2; border-color: #1da1f2; background: rgba(29,161,242,0.1); }
+.share-icon-btn.cp:hover  { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+
+.article-divider { height: 1px; background: var(--border); margin: 24px 0 32px; }
+
+/* Article hero image */
+.article-hero-img {
+  width: 100%; max-height: 420px;
+  object-fit: cover; border-radius: var(--radius-lg);
+  margin-bottom: 36px; background: var(--bg-3);
+}
+.article-hero-img-placeholder {
+  width: 100%; height: 300px;
+  background: var(--bg-3); border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 36px;
+}
+.article-hero-img-placeholder i { font-size: 64px; color: var(--border-2); }
+
+/* Image credit line */
+.image-credit {
+  font-family: var(--font-m); font-size: 10px;
+  color: var(--text-3); margin-top: -24px; margin-bottom: 32px;
+  display: flex; align-items: center; gap: 6px;
+}
+.image-credit i { font-size: 9px; color: var(--text-3); }
+.image-credit a { color: var(--text-3); text-decoration: underline; transition: color var(--trans); }
+.image-credit a:hover { color: var(--accent); }
+
+/* Article body */
+.article-body {
+  font-size: 17px; line-height: 1.82; color: var(--text-1);
+  font-weight: 300; letter-spacing: 0.01em;
+}
+.article-body p { margin-bottom: 26px; }
+.article-body p:last-child { margin-bottom: 0; }
+
+/* Tags */
+.article-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border); }
+.article-tag {
+  font-family: var(--font-m); font-size: 10px; color: var(--text-3);
+  background: var(--bg-3); border: 1px solid var(--border);
+  padding: 4px 10px; border-radius: 4px;
+  transition: all var(--trans);
+}
+.article-tag:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Source credit */
+.article-source { margin-top: 20px; font-size: 11px; font-family: var(--font-m); color: var(--text-3); }
+.article-source a { color: var(--accent); }
+
+/* Share CTA */
+.share-cta {
+  margin-top: 48px; padding: 28px 32px;
+  background: linear-gradient(135deg, rgba(0,212,170,0.05), rgba(0,153,255,0.05));
+  border: 1px solid var(--border-2); border-radius: var(--radius-xl);
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+}
+.share-cta-text { flex: 1; min-width: 180px; }
+.share-cta-text h4 { font-family: var(--font-d); font-size: 18px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; }
+.share-cta-text p  { font-size: 13px; color: var(--text-2); }
+.share-cta-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.cta-btn {
+  display: flex; align-items: center; gap: 7px;
+  padding: 10px 18px; border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 600; font-family: var(--font-b);
+  border: 1px solid var(--border-2); cursor: pointer; transition: all var(--trans);
+  background: var(--bg-3); color: var(--text-2);
+}
+.cta-btn:hover { transform: translateY(-1px); }
+.cta-btn.wa:hover  { color: #25d366; border-color: #25d366; background: rgba(37,211,102,0.08); }
+.cta-btn.tw:hover  { color: #1da1f2; border-color: #1da1f2; background: rgba(29,161,242,0.08); }
+.cta-btn.cp:hover  { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+
+/* Related */
+.related-section { padding: 56px 0; border-top: 1px solid var(--border); background: var(--bg-2); margin-top: 64px; }
+.related-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+/* Error state */
+.article-error { text-align: center; padding: 120px 24px; }
+.article-error .err-code { font-family: var(--font-d); font-size: 80px; font-weight: 800; color: var(--border-2); display: block; line-height: 1; margin-bottom: 16px; }
+.article-error h2 { font-family: var(--font-d); font-size: 24px; margin-bottom: 10px; }
+.article-error p  { font-size: 14px; color: var(--text-2); margin-bottom: 24px; }
+</style>
+</head>
+<body class="no-ticker">
+
+<!-- Reading progress -->
+<div class="read-progress" id="readProgress"></div>
+
+<!-- ░░ NAV ░░ -->
+<nav class="nav no-ticker" id="mainNav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/public/logo.svg" alt="BytoNova" height="32"></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="/feed.html" class="nav-link"><i class="fa-solid fa-newspaper"></i> Feed</a>
+      <a href="/contact.html" class="nav-link"><i class="fa-solid fa-envelope"></i> Contact</a>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-nav no-ticker-mobile" id="mobileNav">
+  <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+  <a href="/feed.html"><i class="fa-solid fa-newspaper"></i> Feed</a>
+  <a href="/contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+</div>
+
+<!-- ░░ ARTICLE ░░ -->
+<main>
+  <!-- Loading state -->
+  <div id="articleLoading" class="article-main">
+    <div class="article-wrap">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="skel" style="height:14px;width:220px"></div>
+        <div class="skel" style="height:18px;width:80px"></div>
+        <div class="skel" style="height:42px;border-radius:8px"></div>
+        <div class="skel" style="height:42px;border-radius:8px;width:70%"></div>
+        <div class="skel" style="height:14px;width:300px"></div>
+        <div class="skel" style="height:320px;border-radius:16px;margin-top:8px"></div>
+        <div class="skel" style="height:16px"></div>
+        <div class="skel" style="height:16px"></div>
+        <div class="skel" style="height:16px;width:80%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article content -->
+  <div id="articleContent" class="article-main hidden">
+    <div class="article-wrap">
+
+      <nav class="article-breadcrumb">
+        <a href="/">Home</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <a href="/feed.html">Feed</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span id="breadCat"></span>
+      </nav>
+
+      <div id="articleCat" class="article-cat"></div>
+      <h1 id="articleTitle" class="article-title"></h1>
+
+      <div class="article-meta-row">
+        <div class="article-meta-left">
+          <i class="fa-solid fa-newspaper"></i>
+          <span id="articleSource"></span>
+          <span class="meta-sep">-</span>
+          <i class="fa-regular fa-calendar"></i>
+          <time id="articleDate"></time>
+          <span class="meta-sep">-</span>
+          <i class="fa-solid fa-book-open"></i>
+          <span id="articleReadTime"></span>
+        </div>
+        <div class="share-row">
+          <button class="share-btn-main" id="shareMain">
+            <i class="fa-solid fa-share-nodes"></i> Share
+          </button>
+          <button class="share-icon-btn wa" id="shareWA" title="Share on WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+          </button>
+          <button class="share-icon-btn tw" id="shareTW" title="Share on X">
+            <i class="fa-brands fa-x-twitter"></i>
+          </button>
+          <button class="share-icon-btn cp" id="shareCopy" title="Copy link">
+            <i class="fa-solid fa-link"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="article-divider"></div>
+
+      <!-- Hero image -->
+      <img id="articleHeroImg" class="article-hero-img hidden" alt="">
+      <div id="articleHeroPlaceholder" class="article-hero-img-placeholder">
+        <i class="fa-solid fa-microchip" id="articleHeroIcon"></i>
+      </div>
+
+      <!-- Body -->
+      <div id="articleBody" class="article-body"></div>
+
+      <!-- Tags -->
+      <div id="articleTags" class="article-tags"></div>
+
+      <!-- Image credit (shown above source) -->
+      <div id="imageCredit" class="image-credit hidden"></div>
+
+      <!-- Source -->
+      <div id="articleSource2" class="article-source"></div>
+
+      <!-- Share CTA -->
+      <div class="share-cta">
+        <div class="share-cta-text">
+          <h4>Liked this story?</h4>
+          <p>Share it with someone who'd find it interesting.</p>
+        </div>
+        <div class="share-cta-btns">
+          <button class="cta-btn wa" id="ctaWA"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+          <button class="cta-btn tw" id="ctaTW"><i class="fa-brands fa-x-twitter"></i> X</button>
+          <button class="cta-btn cp" id="ctaCopy"><i class="fa-solid fa-link"></i> Copy Link</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div id="articleError" class="hidden">
+    <div style="max-width:760px;margin:0 auto;padding:0 24px">
+      <div class="article-error">
+        <span class="err-code">404</span>
+        <h2>Article Not Found</h2>
+        <p>This article may have been removed or the URL is incorrect.</p>
+        <a href="/feed.html" class="nav-subscribe" style="display:inline-flex;gap:8px">
+          <i class="fa-solid fa-newspaper"></i> Browse All Articles
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ░░ RELATED ░░ -->
+<section class="related-section hidden" id="relatedSection">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">Related <span>Stories</span></h2>
+    </div>
+    <div class="articles-grid related-grid" id="relatedGrid"></div>
+  </div>
+</section>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="/public/logo.svg" alt="BytoNova" height="30">
+        <p class="footer-tagline">Tech & AI news that actually makes sense.</p>
+      </div>
+      <div class="footer-col"><h5>Explore</h5>
+        <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="/feed.html"><i class="fa-solid fa-newspaper"></i> News Feed</a>
+      </div>
+      <div class="footer-col"><h5>Legal</h5>
+        <a href="/privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+        <a href="/disclaimer.html"><i class="fa-solid fa-circle-info"></i> Disclaimer</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span class="footer-year"></span> BytoNova. Not professional advice.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/src/js/core.js"></script>
+<script>
+async function initArticle() {
+  // Get slug from URL path: /articles/slug-here
+  const slug = location.pathname.replace(/^\/articles\//, '').replace(/\/$/, '');
+  if (!slug) { showError(); return; }
+
+  try {
+    const article = await apiFetch(`/api/articles/${slug}`);
+    renderArticle(article);
+    setupReadingProgress();
+    setupShare(article);
+    loadRelated(article.category, slug);
+  } catch (e) {
+    console.error('[Article]', e.message);
+    showError();
+  }
+}
+
+function renderArticle(a) {
+  const url = `${window.location.origin}/articles/${a.slug}`;
+
+  // ── SEO meta ──
+  document.getElementById('pageTitle').textContent = `${a.title} - BytoNova`;
+  document.getElementById('pageMeta').content      = a.meta || '';
+  document.getElementById('ogTitle').content       = a.title;
+  document.getElementById('ogDesc').content        = a.meta || '';
+  document.getElementById('ogUrl').content         = url;
+  document.getElementById('ogImage').content       = a.image_url || '';
+  document.getElementById('ogPubTime').content     = a.published_at || '';
+  document.getElementById('ogSection').content     = a.category || '';
+  document.getElementById('twTitle').content       = a.title;
+  document.getElementById('twDesc').content        = a.meta || '';
+  document.getElementById('twImage').content       = a.image_url || '';
+
+  // JSON-LD structured data
+  const schema = {
+    '@context': 'https://schema.org', '@type': 'NewsArticle',
+    headline: a.title, description: a.meta,
+    image: a.image_url || '', datePublished: a.published_at,
+    publisher: { '@type': 'Organization', name: 'BytoNova', url: BN.SITE_URL },
+    articleSection: a.category,
+    keywords: Array.isArray(a.tags) ? a.tags.join(', ') : '',
+  };
+  const sd = document.createElement('script');
+  sd.type = 'application/ld+json';
+  sd.textContent = JSON.stringify(schema);
+  document.head.appendChild(sd);
+
+  // ── Render ──
+  const cat  = getCatClass(a.category);
+  const icon = getCatIcon(a.category);
+
+  document.getElementById('breadCat').textContent     = a.category;
+  const catEl = document.getElementById('articleCat');
+  catEl.className = `article-cat ${cat}`;
+  catEl.innerHTML = `<i class="fa-solid ${icon}"></i>${a.category}`;
+
+  document.getElementById('articleTitle').textContent    = a.title;
+  document.getElementById('articleSource').textContent   = a.source_name || 'BytoNova';
+  document.getElementById('articleDate').textContent     = formatDate(a.published_at);
+  document.getElementById('articleDate').setAttribute('datetime', a.published_at);
+  document.getElementById('articleReadTime').innerHTML   = `${a.read_time || 4} min read`;
+
+  // Image — real image from source, no AI generation
+  const heroImg = document.getElementById('articleHeroImg');
+  const heroPlaceholder = document.getElementById('articleHeroPlaceholder');
+  document.getElementById('articleHeroIcon').className = `fa-solid ${icon}`;
+  if (a.image_url) {
+    heroImg.src = a.image_url;
+    heroImg.alt = a.title;
+    heroImg.classList.remove('hidden');
+    heroImg.onerror = () => {
+      heroImg.classList.add('hidden');
+      heroPlaceholder.style.display = 'flex';
+      document.getElementById('imageCredit').classList.add('hidden');
+    };
+    heroPlaceholder.style.display = 'none';
+
+    // Image credit
+    const creditEl = document.getElementById('imageCredit');
+    if (a.image_credit || a.source_name) {
+      const credit = a.image_credit || a.source_name || '';
+      const sourceUrl = a.source_url || '#';
+      creditEl.innerHTML = `<i class="fa-regular fa-copyright"></i> Image credit: <a href="${sourceUrl}" target="_blank" rel="noopener">${credit}</a>`;
+      creditEl.classList.remove('hidden');
+    }
+  }
+
+  // Body
+  const bodyEl = document.getElementById('articleBody');
+  const paras  = (a.body || '').split(/\n\n+/).filter(p => p.trim());
+  bodyEl.innerHTML = paras.map(p => `<p>${p.trim()}</p>`).join('');
+
+  // Tags
+  const tags = Array.isArray(a.tags) ? a.tags : [];
+  document.getElementById('articleTags').innerHTML = tags.map(t => `<span class="article-tag">#${t}</span>`).join('');
+
+  // Source credit
+  if (a.source_url) {
+    document.getElementById('articleSource2').innerHTML =
+      `Originally reported by <strong>${a.source_name || 'source'}</strong>. <a href="${a.source_url}" target="_blank" rel="noopener">View original <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px"></i></a>`;
+  }
+
+  document.getElementById('articleLoading').classList.add('hidden');
+  document.getElementById('articleContent').classList.remove('hidden');
+}
+
+function setupReadingProgress() {
+  const bar  = document.getElementById('readProgress');
+  const body = document.getElementById('articleBody');
+  if (!bar || !body) return;
+  window.addEventListener('scroll', () => {
+    const rect   = body.getBoundingClientRect();
+    const total  = body.offsetHeight;
+    const scrolled = Math.max(0, -rect.top);
+    bar.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+  }, { passive: true });
+}
+
+function setupShare(a) {
+  const url     = location.href;
+  const text    = encodeURIComponent(a.title);
+  const urlEnc  = encodeURIComponent(url);
+
+  // Web Share API (shows native sheet with WhatsApp, Instagram, etc.)
+  document.getElementById('shareMain').addEventListener('click', async () => {
+    if (navigator.share) {
+      try { await navigator.share({ title: a.title, text: a.meta || '', url }); }
+      catch { /* user cancelled */ }
+    } else {
+      navigator.clipboard.writeText(url);
+      Toast.success('Link copied!', 'Paste it anywhere to share.');
+    }
+  });
+
+  const wa = `https://wa.me/?text=${text}%20${urlEnc}`;
+  const tw = `https://twitter.com/intent/tweet?text=${text}&url=${urlEnc}`;
+
+  document.getElementById('shareWA').onclick  = () => window.open(wa, '_blank');
+  document.getElementById('shareTW').onclick  = () => window.open(tw, '_blank');
+  document.getElementById('shareCopy').onclick = () => { navigator.clipboard.writeText(url); Toast.success('Copied!', ''); };
+  document.getElementById('ctaWA').onclick    = () => window.open(wa, '_blank');
+  document.getElementById('ctaTW').onclick    = () => window.open(tw, '_blank');
+  document.getElementById('ctaCopy').onclick  = () => { navigator.clipboard.writeText(url); Toast.success('Link copied!', ''); };
+}
+
+async function loadRelated(category, currentSlug) {
+  try {
+    const data     = await apiFetch(`/api/articles?category=${category}&limit=3`);
+    const articles = (data.articles || []).filter(a => a.slug !== currentSlug).slice(0, 3);
+    if (!articles.length) return;
+    document.getElementById('relatedGrid').innerHTML = articles.map(a => buildCard(a)).join('');
+    document.getElementById('relatedSection').classList.remove('hidden');
+  } catch { /* silent */ }
+}
+
+function showError() {
+  document.getElementById('articleLoading').classList.add('hidden');
+  document.getElementById('articleError').classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', initArticle);
+</script>
+</body>
+</html>

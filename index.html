@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BytoNova — Tech & AI News That Actually Makes Sense</title>
+<meta name="description" content="BytoNova covers AI, technology, gadgets, mobile, and gaming — written by humans, for humans. Fresh tech news every few hours.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="BytoNova — Tech & AI News">
+<meta property="og:description" content="Fresh tech news every few hours. AI, gadgets, mobile, gaming — explained clearly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bytonova.vercel.app">
+<meta property="og:image" content="https://bytonova.vercel.app/public/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BytoNova — Tech & AI News">
+<meta name="twitter:description" content="Fresh tech news every few hours. AI, gadgets, mobile, gaming — explained clearly.">
+<link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/src/css/main.css">
+<style>
+/* ── Index-specific ── */
+.hero {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  padding: 72px 0 64px;
+  position: relative; overflow: hidden;
+}
+.hero-glow {
+  position: absolute; top: -120px; right: -80px;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,170,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-glow-2 {
+  position: absolute; bottom: -80px; left: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,153,255,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+}
+.hero-badge {
+  font-family: var(--font-m); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); background: var(--accent-dim);
+  border: 1px solid var(--accent);
+  padding: 4px 10px; border-radius: 4px;
+  display: flex; align-items: center; gap: 6px;
+}
+.hero-date { font-family: var(--font-m); font-size: 11px; color: var(--text-3); }
+.hero-content { max-width: 800px; }
+.hero-cat {
+  font-family: var(--font-m); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 4px;
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-bottom: 18px;
+}
+.hero-title {
+  font-family: var(--font-d); font-size: clamp(30px, 5vw, 52px);
+  font-weight: 800; line-height: 1.1; letter-spacing: -0.03em;
+  color: var(--text-1); margin-bottom: 18px;
+}
+.hero-meta {
+  font-family: var(--font-m); font-size: 11px; color: var(--text-3);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.hero-meta i { color: var(--accent); }
+.hero-meta-dot { color: var(--border-2); }
+.hero-excerpt { font-size: 16px; color: var(--text-2); line-height: 1.7; max-width: 620px; margin-bottom: 28px; }
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: var(--accent); color: var(--bg);
+  font-weight: 700; font-size: 14px; letter-spacing: 0.01em;
+  padding: 13px 28px; border-radius: var(--radius-pill);
+  border: none; text-decoration: none;
+  transition: all var(--trans);
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px var(--accent-glow); }
+.hero-cta i { font-size: 12px; transition: transform var(--trans); }
+.hero-cta:hover i { transform: translateX(3px); }
+.hero-img {
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: 42%; overflow: hidden;
+}
+.hero-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.35; }
+.hero-img-placeholder {
+  width: 100%; height: 100%; background: var(--bg-3);
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-img-placeholder i { font-size: 80px; color: var(--border-2); }
+/* Dark scan-line decoration */
+.hero-img::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg, var(--bg-2) 0%, transparent 40%); z-index:1; }
+.hero-img::after  { content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px); z-index:2; }
+
+/* Hero image credit */
+.hero-img-credit {
+  position: absolute; bottom: 10px; right: 12px;
+  font-family: var(--font-m); font-size: 9px;
+  color: rgba(255,255,255,0.5);
+  z-index: 3; display: flex; align-items: center; gap: 5px;
+}
+.hero-img-credit a { color: rgba(255,255,255,0.5); text-decoration: underline; }
+.hero-img-credit a:hover { color: rgba(255,255,255,0.9); }
+.hero-img-credit i { font-size: 8px; }
+
+.main-content { padding: 56px 0; }
+</style>
+</head>
+<body>
+
+<!-- ░░ TICKER ░░ -->
+<div class="ticker-wrap" id="tickerWrap">
+  <span class="ticker-badge"><i class="fa-solid fa-circle" style="font-size:6px"></i> LIVE</span>
+  <div class="ticker-sep"></div>
+  <div class="ticker-scroll">
+    <div class="ticker-track" id="tickerTrack">
+      <span class="ticker-item">Loading latest headlines...</span>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ NAV ░░ -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/public/logo.svg" alt="BytoNova" height="32"></a>
+    <div class="nav-links">
+      <a href="/"            class="nav-link active"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="/feed.html"   class="nav-link"><i class="fa-solid fa-newspaper"></i> Feed</a>
+      <a href="/contact.html" class="nav-link"><i class="fa-solid fa-envelope"></i> Contact</a>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
+    <button class="nav-subscribe" onclick="document.getElementById('newsletterBar').scrollIntoView({behavior:'smooth'})">
+      <i class="fa-solid fa-bolt"></i> Subscribe
+    </button>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- Mobile nav dropdown -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+  <a href="/feed.html"><i class="fa-solid fa-newspaper"></i> News Feed</a>
+  <a href="/contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+  <div class="mobile-nav-sep"></div>
+  <a href="/privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+  <a href="/disclaimer.html"><i class="fa-solid fa-circle-info"></i> Disclaimer</a>
+</div>
+
+<!-- ░░ HERO ░░ -->
+<section class="hero" id="heroSection">
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="container">
+    <div class="hero-eyebrow">
+      <span class="hero-badge"><i class="fa-solid fa-star"></i> TOP STORY</span>
+      <span class="hero-date" id="heroDate"></span>
+    </div>
+    <div class="hero-content" id="heroContent">
+      <!-- Skeleton -->
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:600px">
+        <div class="skel skel-tag" style="width:90px;height:16px"></div>
+        <div class="skel" style="height:48px;border-radius:8px"></div>
+        <div class="skel" style="height:48px;border-radius:8px;width:75%"></div>
+        <div class="skel" style="height:14px"></div>
+        <div class="skel" style="height:14px;width:60%"></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-img" id="heroImg">
+    <div class="hero-img-placeholder"><i class="fa-solid fa-microchip"></i></div>
+  </div>
+</section>
+
+<!-- ░░ CATEGORY FILTER ░░ -->
+<div class="filter-wrap">
+  <div class="container">
+    <div class="filter-inner" id="filterBar">
+      <button class="filter-pill active" data-cat="All">All</button>
+      <button class="filter-pill" data-cat="AI"><span class="filter-dot dot-ai"></span>AI</button>
+      <button class="filter-pill" data-cat="Technology"><span class="filter-dot dot-technology"></span>Technology</button>
+      <button class="filter-pill" data-cat="Gadgets"><span class="filter-dot dot-gadgets"></span>Gadgets</button>
+      <button class="filter-pill" data-cat="Mobile"><span class="filter-dot dot-mobile"></span>Mobile</button>
+      <button class="filter-pill" data-cat="Gaming"><span class="filter-dot dot-gaming"></span>Gaming</button>
+      <button class="filter-pill" data-cat="Science"><span class="filter-dot dot-science"></span>Science</button>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ ARTICLES ░░ -->
+<main class="main-content">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">Latest <span>Stories</span></h2>
+      <a href="/feed.html" class="see-all"><i class="fa-solid fa-arrow-right"></i> View All</a>
+    </div>
+    <div class="articles-grid" id="articlesGrid">
+      <!-- skeleton cards -->
+      <div class="card card-skel"><div class="skel skel-img"></div><div style="padding:18px 20px;display:flex;flex-direction:column;gap:10px"><div class="skel skel-tag"></div><div class="skel skel-h"></div><div class="skel skel-h sm"></div><div class="skel skel-p"></div><div class="skel skel-p sm"></div></div></div>
+      <div class="card card-skel"><div class="skel skel-img"></div><div style="padding:18px 20px;display:flex;flex-direction:column;gap:10px"><div class="skel skel-tag"></div><div class="skel skel-h"></div><div class="skel skel-h sm"></div><div class="skel skel-p"></div><div class="skel skel-p sm"></div></div></div>
+      <div class="card card-skel"><div class="skel skel-img"></div><div style="padding:18px 20px;display:flex;flex-direction:column;gap:10px"><div class="skel skel-tag"></div><div class="skel skel-h"></div><div class="skel skel-h sm"></div><div class="skel skel-p"></div><div class="skel skel-p sm"></div></div></div>
+    </div>
+    <div class="hidden" id="noArticles" style="text-align:center;padding:80px 0;color:var(--text-3)">
+      <i class="fa-solid fa-satellite-dish" style="font-size:40px;display:block;margin-bottom:16px;opacity:0.4"></i>
+      No articles yet. The pipeline runs every 10 minutes.
+    </div>
+  </div>
+</main>
+
+<!-- ░░ STATS ░░ -->
+<section class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><span class="stat-num" id="statTotal">-</span><span class="stat-lbl">Articles Published</span></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><span class="stat-num">10 min</span><span class="stat-lbl">Publish Frequency</span></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><span class="stat-num">30+</span><span class="stat-lbl">RSS Sources</span></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><span class="stat-num">5</span><span class="stat-lbl">AI Fallbacks</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ NEWSLETTER ░░ -->
+<section class="container">
+  <div class="newsletter-bar" id="newsletterBar">
+    <i class="fa-solid fa-satellite-dish newsletter-icon"></i>
+    <div class="newsletter-text">
+      <h3>BytoNova Weekly</h3>
+      <p>The best tech stories of the week, curated and delivered. No spam, ever.</p>
+    </div>
+    <div class="newsletter-form">
+      <input type="email" id="nlEmail" placeholder="your@email.com" autocomplete="email">
+      <button id="nlSubmit" onclick="handleNewsletter()">
+        <i class="fa-solid fa-paper-plane"></i> Subscribe
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="/public/logo.svg" alt="BytoNova" height="30">
+        <p class="footer-tagline">Tech & AI news that actually makes sense. Written clearly, published fast.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="/feed.html"><i class="fa-solid fa-newspaper"></i> News Feed</a>
+        <a href="/contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Categories</h5>
+        <a href="/feed.html?cat=AI"><i class="fa-solid fa-robot"></i> AI</a>
+        <a href="/feed.html?cat=Technology"><i class="fa-solid fa-microchip"></i> Technology</a>
+        <a href="/feed.html?cat=Gadgets"><i class="fa-solid fa-plug"></i> Gadgets</a>
+        <a href="/feed.html?cat=Mobile"><i class="fa-solid fa-mobile-screen"></i> Mobile</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="/privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a>
+        <a href="/disclaimer.html"><i class="fa-solid fa-circle-info"></i> Disclaimer</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span class="footer-year"></span> BytoNova. Content is AI-assisted original writing. Not professional advice.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/src/js/core.js"></script>
+<script>
+// ── Homepage JS ──────────────────────────────────────────────────
+
+let allArticles = [];
+let currentCat  = 'All';
+
+async function initHome() {
+  document.getElementById('heroDate').textContent =
+    new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  await Promise.all([ loadTopStory(), loadArticles() ]);
+
+  // Category filter
+  document.getElementById('filterBar').addEventListener('click', e => {
+    const pill = e.target.closest('.filter-pill');
+    if (!pill) return;
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    currentCat = pill.dataset.cat;
+    renderGrid(currentCat === 'All' ? allArticles : allArticles.filter(a => a.category === currentCat));
+  });
+}
+
+async function loadTopStory() {
+  try {
+    const data = await apiFetch('/api/top-story');
+    renderHero(data);
+  } catch (e) {
+    document.getElementById('heroContent').innerHTML =
+      '<p style="color:var(--text-3)">Top story loading soon...</p>';
+  }
+}
+
+function renderHero(a) {
+  const cat  = getCatClass(a.category);
+  const icon = getCatIcon(a.category);
+  document.getElementById('heroContent').innerHTML = `
+    <span class="hero-cat ${cat}"><i class="fa-solid ${icon}"></i>${a.category}</span>
+    <h1 class="hero-title">${a.title}</h1>
+    <p class="hero-excerpt">${a.meta || ''}</p>
+    <div class="hero-meta">
+      <i class="fa-solid fa-newspaper"></i><span>${a.source_name || 'BytoNova'}</span>
+      <span class="hero-meta-dot">-</span>
+      <i class="fa-regular fa-clock"></i><span>${formatRelTime(a.published_at)}</span>
+      <span class="hero-meta-dot">-</span>
+      <i class="fa-solid fa-book-open"></i><span>${a.read_time || 4} min read</span>
+    </div>
+    <a class="hero-cta" href="/articles/${a.slug}">
+      Read Full Story <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  `;
+
+  // Hero image — real image from source with credit
+  const imgEl = document.getElementById('heroImg');
+  if (a.image_url) {
+    const credit = a.image_credit || a.source_name || '';
+    const srcUrl = a.source_url || '#';
+    imgEl.innerHTML = `
+      <img src="${a.image_url}" alt="${a.title}"
+        onerror="this.parentElement.style.display='none'">
+      <div class="hero-img-placeholder" style="display:none"><i class="fa-solid fa-microchip"></i></div>
+      ${credit ? `<div class="hero-img-credit"><i class="fa-regular fa-copyright"></i> <a href="${srcUrl}" target="_blank" rel="noopener">${credit}</a></div>` : ''}
+    `;
+    imgEl.style.display = 'block';
+  }
+}
+
+async function loadArticles() {
+  try {
+    const data = await apiFetch('/api/articles?limit=20&sort=latest');
+    allArticles = data.articles || [];
+
+    const statEl = document.getElementById('statTotal');
+    if (statEl) statEl.textContent = data.total || allArticles.length;
+
+    // Build ticker from titles
+    buildTicker(allArticles);
+
+    // Render grid (skip first — shown in hero)
+    renderGrid(allArticles.slice(1));
+
+  } catch (e) {
+    document.getElementById('articlesGrid').innerHTML = '';
+    document.getElementById('noArticles').classList.remove('hidden');
+  }
+}
+
+function renderGrid(articles) {
+  const grid = document.getElementById('articlesGrid');
+  const none = document.getElementById('noArticles');
+  if (!articles.length) { grid.innerHTML = ''; none.classList.remove('hidden'); return; }
+  none.classList.add('hidden');
+  grid.innerHTML = articles.map(a => buildCard(a)).join('');
+  // Stagger fade-in
+  grid.querySelectorAll('.card').forEach((c, i) => {
+    c.style.opacity = '0'; c.style.transform = 'translateY(14px)';
+    c.style.transition = `opacity 0.28s ${i*0.05}s ease, transform 0.28s ${i*0.05}s ease`;
+    requestAnimationFrame(() => requestAnimationFrame(() => { c.style.opacity='1'; c.style.transform='translateY(0)'; }));
+  });
+}
+
+function buildTicker(articles) {
+  if (!articles.length) return;
+  const track = document.getElementById('tickerTrack');
+  const items = [...articles, ...articles].map(a => `<span class="ticker-item">${a.title}</span>`).join('');
+  track.innerHTML = items;
+}
+
+async function handleNewsletter() {
+  const emailEl = document.getElementById('nlEmail');
+  const btn     = document.getElementById('nlSubmit');
+  const email   = emailEl.value.trim();
+  btn.disabled  = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Subscribing...';
+  const ok = await Newsletter.submit(email);
+  if (ok) { emailEl.value = ''; }
+  btn.disabled  = false;
+  btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Subscribe';
+}
+
+document.addEventListener('DOMContentLoaded', initHome);
+</script>
+</body>
+</html>

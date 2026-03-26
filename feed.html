@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News Feed - BytoNova</title>
+<meta name="description" content="Browse all BytoNova tech articles. Filter by AI, Technology, Gadgets, Mobile, Gaming, and Science.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="News Feed - BytoNova">
+<meta property="og:description" content="Browse all BytoNova tech articles.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/src/css/main.css">
+<style>
+body.no-ticker { padding-top: var(--nav-h); }
+.feed-header { padding: 52px 0 40px; background: var(--bg-2); border-bottom: 1px solid var(--border); }
+.feed-header-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+
+/* Search box */
+.search-box {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-3); border: 1px solid var(--border-2);
+  border-radius: var(--radius-pill); padding: 10px 18px;
+  min-width: 280px; transition: border-color var(--trans); margin-top: 36px;
+}
+.search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+.search-box i  { color: var(--text-3); font-size: 14px; }
+.search-box input { background: transparent; border: none; outline: none; font-size: 14px; font-family: var(--font-b); color: var(--text-1); width: 100%; }
+.search-box input::placeholder { color: var(--text-3); }
+.search-clear { background: none; border: none; color: var(--text-3); cursor: pointer; font-size: 12px; transition: color var(--trans); padding: 0; }
+.search-clear:hover { color: var(--text-1); }
+
+/* Advanced filters */
+.adv-filter { background: var(--bg-2); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: var(--nav-h); z-index: 100; }
+.filter-rows { display: flex; flex-direction: column; gap: 12px; }
+.filter-row  { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.filter-lbl  { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3); min-width: 68px; flex-shrink: 0; }
+.filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-row-2 { padding-top: 12px; border-top: 1px solid var(--border); align-items: flex-start; }
+.reset-btn { margin-left: auto; background: transparent; border: 1px solid var(--border-2); color: var(--text-3); font-size: 11px; font-family: var(--font-m); padding: 6px 14px; border-radius: var(--radius-pill); cursor: pointer; transition: all var(--trans); }
+.reset-btn:hover { color: var(--red); border-color: var(--red); }
+
+/* Results bar */
+.results-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.results-count { font-family: var(--font-m); font-size: 11px; color: var(--text-3); }
+.view-btns { display: flex; gap: 4px; }
+.view-btn { width: 32px; height: 32px; border: 1px solid var(--border-2); background: transparent; color: var(--text-3); border-radius: 8px; font-size: 13px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--trans); }
+.view-btn.active, .view-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+
+.feed-main { padding: 40px 0 80px; }
+
+/* Load more */
+.load-more-wrap { text-align: center; margin-top: 48px; }
+.load-more-btn { background: transparent; border: 1px solid var(--border-2); color: var(--text-2); font-size: 14px; font-weight: 500; padding: 13px 40px; border-radius: var(--radius-pill); cursor: pointer; transition: all var(--trans); font-family: var(--font-b); display: inline-flex; align-items: center; gap: 8px; }
+.load-more-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+
+/* No results */
+.no-results { text-align: center; padding: 80px 24px; }
+.no-results i { font-size: 48px; color: var(--border-2); display: block; margin-bottom: 20px; }
+.no-results h3 { font-family: var(--font-d); font-size: 22px; color: var(--text-2); margin-bottom: 10px; }
+.no-results p  { font-size: 14px; color: var(--text-3); }
+.inline-btn { background: none; border: none; color: var(--accent); font-size: 14px; cursor: pointer; font-family: var(--font-b); text-decoration: underline; padding: 0; }
+</style>
+</head>
+<body class="no-ticker">
+
+<nav class="nav no-ticker" id="mainNav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/public/logo.svg" alt="BytoNova" height="32"></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="/feed.html" class="nav-link active"><i class="fa-solid fa-newspaper"></i> Feed</a>
+      <a href="/contact.html" class="nav-link"><i class="fa-solid fa-envelope"></i> Contact</a>
+    </div>
+    <button class="theme-btn" id="themeBtn"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
+    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-nav no-ticker-mobile" id="mobileNav">
+  <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+  <a href="/feed.html"><i class="fa-solid fa-newspaper"></i> Feed</a>
+  <a href="/contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+  <div class="mobile-nav-sep"></div>
+  <a href="/privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+  <a href="/disclaimer.html"><i class="fa-solid fa-circle-info"></i> Disclaimer</a>
+</div>
+
+<header class="feed-header">
+  <div class="container">
+    <div class="feed-header-inner">
+      <div>
+        <p class="page-eyebrow">Browse</p>
+        <h1 class="page-h1">News <span>Feed</span></h1>
+        <p class="page-sub">All BytoNova articles. Updated every 10 minutes.</p>
+      </div>
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search articles..." autocomplete="off" spellcheck="false">
+        <button class="search-clear hidden" id="searchClear"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="adv-filter">
+  <div class="container">
+    <div class="filter-rows">
+      <div class="filter-row">
+        <span class="filter-lbl">Category</span>
+        <div class="filter-pills">
+          <button class="filter-pill active" data-filter="category" data-val="All">All</button>
+          <button class="filter-pill" data-filter="category" data-val="AI"><span class="filter-dot dot-ai"></span>AI</button>
+          <button class="filter-pill" data-filter="category" data-val="Technology"><span class="filter-dot dot-technology"></span>Technology</button>
+          <button class="filter-pill" data-filter="category" data-val="Gadgets"><span class="filter-dot dot-gadgets"></span>Gadgets</button>
+          <button class="filter-pill" data-filter="category" data-val="Mobile"><span class="filter-dot dot-mobile"></span>Mobile</button>
+          <button class="filter-pill" data-filter="category" data-val="Gaming"><span class="filter-dot dot-gaming"></span>Gaming</button>
+          <button class="filter-pill" data-filter="category" data-val="Science"><span class="filter-dot dot-science"></span>Science</button>
+        </div>
+      </div>
+      <div class="filter-row filter-row-2">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;flex:1">
+          <span class="filter-lbl">Read Time</span>
+          <div class="filter-pills">
+            <button class="filter-pill active" data-filter="readtime" data-val="all">Any</button>
+            <button class="filter-pill" data-filter="readtime" data-val="short"><i class="fa-solid fa-bolt" style="font-size:10px"></i> Quick &lt;3 min</button>
+            <button class="filter-pill" data-filter="readtime" data-val="medium"><i class="fa-solid fa-mug-hot" style="font-size:10px"></i> 3-5 min</button>
+            <button class="filter-pill" data-filter="readtime" data-val="long"><i class="fa-solid fa-book" style="font-size:10px"></i> 5+ min</button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <span class="filter-lbl">Sort</span>
+          <div class="filter-pills">
+            <button class="filter-pill active" data-filter="sort" data-val="latest"><i class="fa-solid fa-clock" style="font-size:10px"></i> Newest</button>
+            <button class="filter-pill" data-filter="sort" data-val="trending"><i class="fa-solid fa-fire" style="font-size:10px"></i> Trending</button>
+          </div>
+        </div>
+        <button class="reset-btn" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="feed-main">
+  <div class="container">
+    <div class="results-bar">
+      <span class="results-count" id="resultsCount">Loading...</span>
+      <div class="view-btns">
+        <button class="view-btn active" id="viewGrid" title="Grid view"><i class="fa-solid fa-grip"></i></button>
+        <button class="view-btn" id="viewList" title="List view"><i class="fa-solid fa-list"></i></button>
+      </div>
+    </div>
+
+    <div class="articles-grid" id="feedGrid">
+      <div class="card card-skel"><div class="skel skel-img"></div><div style="padding:18px 20px;display:flex;flex-direction:column;gap:10px"><div class="skel skel-tag"></div><div class="skel skel-h"></div><div class="skel skel-p"></div></div></div>
+      <div class="card card-skel"><div class="skel skel-img"></div><div style="padding:18px 20px;display:flex;flex-direction:column;gap:10px"><div class="skel skel-tag"></div><div class="skel skel-h"></div><div class="skel skel-p"></div></div></div>
+      <div class="card card-skel"><div class="skel skel-img"></div><div style="padding:18px 20px;display:flex;flex-direction:column;gap:10px"><div class="skel skel-tag"></div><div class="skel skel-h"></div><div class="skel skel-p"></div></div></div>
+    </div>
+
+    <div class="no-results hidden" id="noResults">
+      <i class="fa-solid fa-satellite-dish"></i>
+      <h3>Nothing matches your filters</h3>
+      <p>Try adjusting the filters or <button class="inline-btn" id="resetInline">reset them all</button></p>
+    </div>
+
+    <div class="load-more-wrap hidden" id="loadMoreWrap">
+      <button class="load-more-btn" id="loadMoreBtn">
+        <i class="fa-solid fa-chevron-down"></i> Load More Articles
+      </button>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand"><img src="/public/logo.svg" alt="BytoNova" height="30"><p class="footer-tagline">Tech & AI news that actually makes sense.</p></div>
+      <div class="footer-col"><h5>Explore</h5><a href="/"><i class="fa-solid fa-house"></i> Home</a><a href="/feed.html"><i class="fa-solid fa-newspaper"></i> Feed</a></div>
+      <div class="footer-col"><h5>Legal</h5><a href="/privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy</a><a href="/disclaimer.html"><i class="fa-solid fa-circle-info"></i> Disclaimer</a></div>
+    </div>
+    <div class="footer-bottom"><p>© <span class="footer-year"></span> BytoNova.</p></div>
+  </div>
+</footer>
+
+<script src="/src/js/core.js"></script>
+<script>
+const State = { category:'All', readtime:'all', sort:'latest', search:'', page:1, limit:12, total:0, articles:[], loading:false };
+let searchTimer = null;
+
+async function initFeed() {
+  // Check URL param for category
+  const params = new URLSearchParams(location.search);
+  if (params.get('cat')) {
+    State.category = params.get('cat');
+    document.querySelectorAll('[data-filter="category"]').forEach(p => p.classList.toggle('active', p.dataset.val === State.category));
+  }
+
+  setupFilters();
+  setupSearch();
+  setupViews();
+  await loadFeed(true);
+}
+
+async function loadFeed(reset = false) {
+  if (State.loading) return;
+  State.loading = true;
+  if (reset) { State.page = 1; State.articles = []; showSkeletons(); }
+
+  try {
+    const qs = new URLSearchParams({ sort: State.sort, page: State.page, limit: State.limit });
+    if (State.category !== 'All') qs.set('category', State.category);
+    if (State.search) qs.set('search', State.search);
+
+    const data = await apiFetch(`/api/articles?${qs}`);
+    let articles = data.articles || [];
+    State.total  = data.total || 0;
+
+    // Client-side read-time filter
+    if (State.readtime !== 'all') {
+      articles = articles.filter(a => {
+        const rt = a.read_time || 4;
+        if (State.readtime === 'short')  return rt < 3;
+        if (State.readtime === 'medium') return rt >= 3 && rt <= 5;
+        if (State.readtime === 'long')   return rt > 5;
+        return true;
+      });
+    }
+
+    State.articles = reset ? articles : [...State.articles, ...articles];
+    renderFeed();
+    document.getElementById('resultsCount').textContent =
+      `Showing ${State.articles.length} of ${State.total} articles`;
+    const allLoaded = State.articles.length >= State.total || articles.length < State.limit;
+    document.getElementById('loadMoreWrap').classList.toggle('hidden', allLoaded || !State.articles.length);
+
+  } catch (e) {
+    document.getElementById('feedGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-3)">Could not load articles. Please try again.</div>`;
+  } finally { State.loading = false; }
+}
+
+function renderFeed() {
+  const grid = document.getElementById('feedGrid');
+  const none = document.getElementById('noResults');
+  if (!State.articles.length) { grid.innerHTML = ''; none.classList.remove('hidden'); return; }
+  none.classList.add('hidden');
+  grid.innerHTML = State.articles.map(a => buildCard(a)).join('');
+  grid.querySelectorAll('.card').forEach((c, i) => {
+    c.style.opacity = '0'; c.style.transform = 'translateY(10px)';
+    c.style.transition = `opacity 0.24s ${Math.min(i * 0.04, 0.4)}s ease, transform 0.24s ${Math.min(i * 0.04, 0.4)}s ease`;
+    requestAnimationFrame(() => requestAnimationFrame(() => { c.style.opacity='1'; c.style.transform='translateY(0)'; }));
+  });
+}
+
+function showSkeletons() {
+  document.getElementById('feedGrid').innerHTML = Array(6).fill(0).map(() =>
+    `<div class="card card-skel"><div class="skel skel-img"></div><div style="padding:18px 20px;display:flex;flex-direction:column;gap:10px"><div class="skel skel-tag"></div><div class="skel skel-h"></div><div class="skel skel-p"></div></div></div>`
+  ).join('');
+  document.getElementById('noResults').classList.add('hidden');
+}
+
+function setupFilters() {
+  document.querySelector('.adv-filter').addEventListener('click', e => {
+    const pill = e.target.closest('.filter-pill');
+    if (!pill || !pill.dataset.filter) return;
+    const f = pill.dataset.filter, v = pill.dataset.val;
+    document.querySelectorAll(`[data-filter="${f}"]`).forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    State[f] = v;
+    loadFeed(true);
+  });
+  const reset = () => {
+    State.category='All'; State.readtime='all'; State.sort='latest'; State.search='';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchClear').classList.add('hidden');
+    document.querySelectorAll('.filter-pill').forEach(p => {
+      const defaults = { category:'All', readtime:'all', sort:'latest' };
+      if (defaults[p.dataset.filter] !== undefined) p.classList.toggle('active', p.dataset.val === defaults[p.dataset.filter]);
+    });
+    loadFeed(true);
+  };
+  document.getElementById('resetBtn').addEventListener('click', reset);
+  document.getElementById('resetInline').addEventListener('click', reset);
+  document.getElementById('loadMoreBtn').addEventListener('click', async () => {
+    State.page++;
+    const btn = document.getElementById('loadMoreBtn');
+    btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+    await loadFeed(false);
+    btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Load More Articles';
+  });
+}
+
+function setupSearch() {
+  const input = document.getElementById('searchInput');
+  const clear = document.getElementById('searchClear');
+  input.addEventListener('input', () => {
+    clear.classList.toggle('hidden', !input.value);
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => { State.search = input.value.trim(); loadFeed(true); }, 400);
+  });
+  clear.addEventListener('click', () => { input.value=''; clear.classList.add('hidden'); State.search=''; loadFeed(true); input.focus(); });
+}
+
+function setupViews() {
+  const grid = document.getElementById('feedGrid');
+  document.getElementById('viewGrid').addEventListener('click', () => {
+    grid.style.gridTemplateColumns = ''; document.getElementById('viewGrid').classList.add('active'); document.getElementById('viewList').classList.remove('active');
+  });
+  document.getElementById('viewList').addEventListener('click', () => {
+    grid.style.gridTemplateColumns = '1fr'; document.getElementById('viewList').classList.add('active'); document.getElementById('viewGrid').classList.remove('active');
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initFeed);
+</script>
+</body>
+</html>

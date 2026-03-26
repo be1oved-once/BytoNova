@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - BytoNova</title>
+<meta name="description" content="Get in touch with BytoNova.">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/src/css/main.css">
+<style>
+body.no-ticker { padding-top: var(--nav-h); }
+.contact-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: start; padding: 56px 0 80px; }
+.contact-info-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 36px; position: sticky; top: calc(var(--nav-h) + 24px); }
+.contact-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.contact-brand img { height: 36px; }
+.contact-brand h2 { font-family: var(--font-d); font-size: 20px; font-weight: 700; }
+.contact-brand p  { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+.contact-detail { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+.contact-detail .ci { font-size: 16px; color: var(--accent); width: 20px; flex-shrink: 0; margin-top: 3px; }
+.contact-detail .cl { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); display: block; margin-bottom: 2px; }
+.contact-detail .cv { font-size: 14px; color: var(--text-2); }
+
+.contact-form-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 36px; }
+.form-h { font-family: var(--font-d); font-size: 22px; font-weight: 700; margin-bottom: 28px; }
+.char-counter { text-align: right; font-family: var(--font-m); font-size: 10px; color: var(--text-3); margin-top: 6px; }
+.form-submit { width: 100%; background: var(--accent); color: var(--bg); border: none; border-radius: var(--radius-pill); padding: 14px; font-size: 15px; font-weight: 700; font-family: var(--font-b); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all var(--trans); margin-top: 8px; }
+.form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
+.form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.form-success { text-align: center; padding: 40px 0; }
+.success-ico { width: 60px; height: 60px; background: rgba(0,212,170,0.1); border: 2px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; color: var(--accent); }
+.form-success h4 { font-family: var(--font-d); font-size: 20px; margin-bottom: 8px; }
+.form-success p  { font-size: 14px; color: var(--text-2); }
+@media (max-width: 900px) { .contact-layout { grid-template-columns: 1fr; } .contact-info-card { position: static; } }
+</style>
+</head>
+<body class="no-ticker">
+<nav class="nav no-ticker" id="mainNav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/public/logo.svg" alt="BytoNova" height="32"></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="/feed.html" class="nav-link"><i class="fa-solid fa-newspaper"></i> Feed</a>
+      <a href="/contact.html" class="nav-link active"><i class="fa-solid fa-envelope"></i> Contact</a>
+    </div>
+    <button class="theme-btn" id="themeBtn"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
+    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-nav no-ticker-mobile" id="mobileNav">
+  <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+  <a href="/feed.html"><i class="fa-solid fa-newspaper"></i> Feed</a>
+  <a href="/contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+  <div class="mobile-nav-sep"></div>
+  <a href="/privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+  <a href="/disclaimer.html"><i class="fa-solid fa-circle-info"></i> Disclaimer</a>
+</div>
+
+<header class="page-hdr">
+  <div class="container">
+    <p class="page-eyebrow">Reach Out</p>
+    <h1 class="page-h1">Say <span>Hello</span></h1>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="contact-layout">
+      <div class="contact-info-card">
+        <div class="contact-brand">
+          <img src="/public/favicon.svg" alt="BytoNova">
+          <div><h2>BytoNova</h2><p>Tech & AI news, simplified.</p></div>
+        </div>
+        <div class="contact-detail">
+          <i class="fa-solid fa-envelope ci"></i>
+          <div><span class="cl">Email</span><span class="cv"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2e4d41405a4f4d5a004942414c4f425c4f5a4740495d6e49434f4742004d4143">[email&#160;protected]</a></span></div>
+        </div>
+        <div class="contact-detail">
+          <i class="fa-solid fa-clock-rotate-left ci"></i>
+          <div><span class="cl">Response Time</span><span class="cv">Within 48 hours</span></div>
+        </div>
+        <div class="contact-detail">
+          <i class="fa-solid fa-comment-dots ci"></i>
+          <div><span class="cl">Topics</span><span class="cv">Corrections, partnerships, feedback, tips</span></div>
+        </div>
+      </div>
+
+      <div class="contact-form-card">
+        <h3 class="form-h">Send a Message</h3>
+        <div id="formWrap">
+          <div class="field-group">
+            <label class="field-label" for="cName">Your Name</label>
+            <input class="field-input" type="text" id="cName" placeholder="Your name" autocomplete="name">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cEmail">Email Address</label>
+            <input class="field-input" type="email" id="cEmail" placeholder="you@email.com" autocomplete="email">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cSubject">Topic</label>
+            <div class="select-wrap">
+              <select class="field-input field-select" id="cSubject">
+                <option value="">Select a topic...</option>
+                <option value="correction">Article Correction</option>
+                <option value="feedback">General Feedback</option>
+                <option value="tip">Story Tip</option>
+                <option value="partnership">Partnership</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cMsg">Message</label>
+            <textarea class="field-input field-textarea" id="cMsg" rows="5" placeholder="Write your message here..." maxlength="1000"></textarea>
+            <div class="char-counter"><span id="charCount">0</span> / 1000</div>
+          </div>
+          <button class="form-submit" id="submitBtn">
+            <i class="fa-solid fa-paper-plane"></i> <span id="submitTxt">Send Message</span>
+          </button>
+        </div>
+        <div class="form-success hidden" id="formSuccess">
+          <div class="success-ico"><i class="fa-solid fa-check"></i></div>
+          <h4>Message Sent!</h4>
+          <p>Thanks for reaching out. We'll reply within 48 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand"><img src="/public/logo.svg" alt="BytoNova" height="30"><p class="footer-tagline">Tech & AI news that actually makes sense.</p></div>
+      <div class="footer-col"><h5>Explore</h5><a href="/"><i class="fa-solid fa-house"></i> Home</a><a href="/feed.html"><i class="fa-solid fa-newspaper"></i> Feed</a></div>
+      <div class="footer-col"><h5>Legal</h5><a href="/privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy</a><a href="/disclaimer.html"><i class="fa-solid fa-circle-info"></i> Disclaimer</a></div>
+    </div>
+    <div class="footer-bottom"><p>© <span class="footer-year"></span> BytoNova.</p></div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/src/js/core.js"></script>
+<script>
+document.getElementById('cMsg').addEventListener('input', function() {
+  document.getElementById('charCount').textContent = this.value.length;
+});
+
+document.getElementById('submitBtn').addEventListener('click', async () => {
+  const name    = document.getElementById('cName').value.trim();
+  const email   = document.getElementById('cEmail').value.trim();
+  const subject = document.getElementById('cSubject').value;
+  const message = document.getElementById('cMsg').value.trim();
+
+  if (!name || !email || !message) { Toast.error('Missing fields', 'Please fill in name, email and message.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { Toast.error('Invalid email', 'Please check your email address.'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  const txt = document.getElementById('submitTxt');
+  btn.disabled = true; txt.textContent = 'Sending...';
+  btn.querySelector('i').className = 'fa-solid fa-spinner fa-spin';
+
+  try {
+    const res = await apiFetch('/api/contact', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, subject, message }),
+    });
+    if (res.success) {
+      document.getElementById('formWrap').classList.add('hidden');
+      document.getElementById('formSuccess').classList.remove('hidden');
+    } else throw new Error(res.error || 'Failed');

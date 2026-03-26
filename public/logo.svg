@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 36" fill="none">
+  <defs>
+    <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4aa"/>
+      <stop offset="100%" stop-color="#0099ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="36" height="36" rx="9" fill="url(#lg)"/>
+  <text x="18" y="26" font-family="Georgia,serif" font-weight="900" font-size="22" text-anchor="middle" fill="#001a14">B</text>
+  <text x="48" y="25" font-family="Georgia,serif" font-weight="700" font-size="20" fill="#f0f0f0" letter-spacing="-0.9">BytoNova</text>
+</svg>
