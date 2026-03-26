@@ -7,7 +7,7 @@
     { "source": "/feed", "destination": "/feed.html" },
     { "source": "/contact", "destination": "/contact.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/disclaimer", "destination": "/disclaimer.html" }
+    { "source": "/disclaimer", "destination": "/disclaimer.html" },
     { "source": "/", "destination": "/index.html" }
   ],
 
